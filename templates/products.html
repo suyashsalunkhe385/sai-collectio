@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products — Sai Collection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="brand">SAI <span>COLLECTION</span></a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('products') }}" class="active">Shop Collection</a></li>
+                <li><a href="{{ url_for('track') }}">Track Order</a></li>
+                <li><a href="{{ url_for('contact') }}">Support</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="{{ url_for('cart') }}" class="cart-btn">
+                    <span>Bag</span>
+                    <span class="cart-badge">{{ cart_item_count }}</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main class="section">
+        <div class="section-head">
+            <div class="section-title">
+                <h2>The Complete Wardrobe</h2>
+                <p>Showing {{ products|length }} styles crafted with high-spec textiles</p>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filters-bar">
+            <a href="{{ url_for('products', category='all') }}" class="filter-pill {% if current_cat == 'all' %}active{% endif %}">All Styles</a>
+            <a href="{{ url_for('products', category='hoodies') }}" class="filter-pill {% if current_cat == 'hoodies' %}active{% endif %}">Hoodies</a>
+            <a href="{{ url_for('products', category='outerwear') }}" class="filter-pill {% if current_cat == 'outerwear' %}active{% endif %}">Jackets</a>
+            <a href="{{ url_for('products', category='jeans') }}" class="filter-pill {% if current_cat == 'jeans' %}active{% endif %}">Jeans</a>
+            <a href="{{ url_for('products', category='shirts') }}" class="filter-pill {% if current_cat == 'shirts' %}active{% endif %}">Shirts</a>
+            <a href="{{ url_for('products', category='t-shirts') }}" class="filter-pill {% if current_cat == 't-shirts' %}active{% endif %}">T-Shirts</a>
+        </div>
+
+        <div class="product-grid">
+            {% for p in products %}
+            <div class="product-card">
+                <span class="product-badge">{{ p.badge }}</span>
+                <div class="product-thumb">
+                    <img src="{{ url_for('static', filename='images/' + p.image) }}" alt="{{ p.name }}">
+                </div>
+                <div class="product-info">
+                    <span class="product-cat">{{ p.category }}</span>
+                    <h3 class="product-title">{{ p.name }}</h3>
+                    <p class="product-desc">{{ p.description }}</p>
+                    <div class="product-price-row">
+                        <span class="curr-price">₹{{ p.price }}</span>
+                        <span class="orig-price">₹{{ p.original_price }}</span>
+                    </div>
+                    <form action="{{ url_for('add_to_cart', prod_id=p.id) }}" method="POST">
+                        <button type="submit" class="btn-add">+ Add to Bag</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
