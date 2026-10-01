@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
-import random
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+import os
 
 app = Flask(__name__)
 app.secret_key = "sai_collection_super_secret_key"
@@ -77,6 +77,12 @@ def ensure_cart():
 def inject_cart_count():
     total_qty = sum(item.get("qty", 1) for item in session.get("cart", []))
     return {"cart_item_count": total_qty}
+
+# GOOGLE SEARCH CONSOLE VERIFICATION ROUTES (Supports HTML File method)
+@app.route("/googleedd22dc795ec660c.html")
+@app.route("/googleedd2dc795ec660c.html")
+def google_verification_file():
+    return "google-site-verification: googleedd22dc795ec660c.html", 200, {'Content-Type': 'text/html; charset=utf-8'}
 
 @app.route("/")
 def index():

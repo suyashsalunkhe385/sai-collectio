@@ -3,341 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Sai Collection — Contemporary Everyday Fashion</title>
 
-    <!-- Google Search Console Verification -->
-<meta name="google-site-verification" content="r3o8Q3v348LaMggog1jQ-ricM57ErHuLBsJI865Ns9o" />
+    <!-- Google Search Console Verification Meta Tag -->
+    <meta name="google-site-verification" content="r3o8Q3v348LaMpggog1jQ-ricM57FrHulBsJT865Ns9o" />
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
-
     <!-- Header Navigation -->
     <header class="navbar">
         <div class="nav-container">
-
-            <a href="{{ url_for('index') }}" class="brand">
-                SAI <span>COLLECTION</span>
-            </a>
-
+            <a href="{{ url_for('index') }}" class="brand">SAI <span>COLLECTION</span></a>
             <ul class="nav-links">
-                <li>
-                    <a href="{{ url_for('index') }}" class="active">
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('products') }}">
-                        Shop Collection
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('track') }}">
-                        Track Order
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('contact') }}">
-                        Support
-                    </a>
-                </li>
+                <li><a href="{{ url_for('index') }}" class="active">Home</a></li>
+                <li><a href="{{ url_for('products') }}">Shop Collection</a></li>
+                <li><a href="{{ url_for('track') }}">Track Order</a></li>
+                <li><a href="{{ url_for('contact') }}">Support</a></li>
             </ul>
-
             <div class="nav-actions">
                 <a href="{{ url_for('cart') }}" class="cart-btn">
                     <span>Bag</span>
                     <span class="cart-badge">{{ cart_item_count }}</span>
                 </a>
             </div>
-
         </div>
     </header>
 
-
-    <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
-
-        {% if messages %}
-
-            <div class="flash-container">
-
-                {% for category, message in messages %}
-
-                    <div class="alert alert-{{ category }}">
-                        {{ message }}
-                    </div>
-
-                {% endfor %}
-
-            </div>
-
-        {% endif %}
-
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
     {% endwith %}
-
 
     <!-- Hero Section -->
     <section class="hero">
-
         <div class="hero-wrap">
-
             <div>
-
-                <span class="hero-tag">
-                    Season Drop 2026
-                </span>
-
-                <h1>
-                    Effortless Style. Precision Fit.
-                </h1>
-
-                <p>
-                    Designed with high-density premium fabrics engineered
-                    for lasting comfort and elevated modern aesthetics.
-                </p>
-
-                <a href="{{ url_for('products') }}" class="btn-primary">
-                    Explore Catalog &rarr;
-                </a>
-
+                <span class="hero-tag">Season Drop 2026</span>
+                <h1>Effortless Style. Precision Fit.</h1>
+                <p>Designed with high-density premium fabrics engineered for lasting comfort and elevated modern aesthetics.</p>
+                <a href="{{ url_for('products') }}" class="btn-primary">Explore Catalog &rarr;</a>
             </div>
-
-
             <div class="hero-img-box">
-
-                <img
-                    src="{{ url_for('static', filename='images/Hoodie.png') }}"
-                    alt="Hero featured product"
-                >
-
+                <img src="{{ url_for('static', filename='images/Hoodie.png') }}" alt="Hero featured product">
             </div>
-
         </div>
-
     </section>
-
 
     <!-- Curated Featured Section -->
     <section class="section">
-
         <div class="section-head">
-
             <div class="section-title">
-
-                <h2>
-                    Trending Essentials
-                </h2>
-
-                <p>
-                    Top-rated selections curated by our community
-                </p>
-
+                <h2>Trending Essentials</h2>
+                <p>Top-rated selections curated by our community</p>
             </div>
-
-
-            <a
-                href="{{ url_for('products') }}"
-                style="font-weight:700; color:var(--primary-accent)"
-            >
-                View All &rarr;
-            </a>
-
+            <a href="{{ url_for('products') }}" style="font-weight:700; color:var(--primary-accent)">View All &rarr;</a>
         </div>
-
 
         <div class="product-grid">
-
             {% for p in products %}
-
             <div class="product-card">
-
-                <span class="product-badge">
-                    {{ p.badge }}
-                </span>
-
-
+                <span class="product-badge">{{ p.badge }}</span>
                 <div class="product-thumb">
-
-                    <img
-                        src="{{ url_for('static', filename='images/' + p.image) }}"
-                        alt="{{ p.name }}"
-                    >
-
+                    <img src="{{ url_for('static', filename='images/' + p.image) }}" alt="{{ p.name }}">
                 </div>
-
-
                 <div class="product-info">
-
-                    <span class="product-cat">
-                        {{ p.category }}
-                    </span>
-
-
-                    <h3 class="product-title">
-                        {{ p.name }}
-                    </h3>
-
-
-                    <p class="product-desc">
-                        {{ p.description }}
-                    </p>
-
-
+                    <span class="product-cat">{{ p.category }}</span>
+                    <h3 class="product-title">{{ p.name }}</h3>
+                    <p class="product-desc">{{ p.description }}</p>
                     <div class="product-price-row">
-
-                        <span class="curr-price">
-                            ₹{{ p.price }}
-                        </span>
-
-                        <span class="orig-price">
-                            ₹{{ p.original_price }}
-                        </span>
-
+                        <span class="curr-price">₹{{ p.price }}</span>
+                        <span class="orig-price">₹{{ p.original_price }}</span>
                     </div>
-
-
-                    <form
-                        action="{{ url_for('add_to_cart', prod_id=p.id) }}"
-                        method="POST"
-                    >
-
-                        <button type="submit" class="btn-add">
-                            + Add to Bag
-                        </button>
-
+                    <form action="{{ url_for('add_to_cart', prod_id=p.id) }}" method="POST">
+                        <button type="submit" class="btn-add">+ Add to Bag</button>
                     </form>
-
                 </div>
-
             </div>
-
             {% endfor %}
-
         </div>
-
     </section>
-
 
     <!-- Footer -->
     <footer>
-
         <div class="footer-grid">
-
-
-            <!-- Company -->
             <div class="footer-col">
-
-                <h3 style="color:#fff; margin-bottom: 1rem;">
-                    SAI COLLECTION
-                </h3>
-
-                <p>
-                    Quality apparel crafted for comfort,
-                    minimalism, and timeless everyday style.
-                </p>
-
+                <h3 style="color:#fff; margin-bottom: 1rem;">SAI COLLECTION</h3>
+                <p>Quality apparel crafted for comfort, minimalism, and timeless everyday style.</p>
             </div>
-
-
-            <!-- Quick Links -->
             <div class="footer-col">
-
-                <h4>
-                    Quick Links
-                </h4>
-
+                <h4>Quick Links</h4>
                 <ul>
-
-                    <li>
-                        <a href="{{ url_for('products') }}">
-                            All Products
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url_for('track') }}">
-                            Order Tracking
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url_for('contact') }}">
-                            Help Center
-                        </a>
-                    </li>
-
+                    <li><a href="{{ url_for('products') }}">All Products</a></li>
+                    <li><a href="{{ url_for('track') }}">Order Tracking</a></li>
+                    <li><a href="{{ url_for('contact') }}">Help Center</a></li>
                 </ul>
-
             </div>
-
-
-            <!-- Customer Care -->
             <div class="footer-col">
-
-                <h4>
-                    Customer Care
-                </h4>
-
+                <h4>Customer Care</h4>
                 <ul>
-
-                    <li>
-                        15-Day Free Returns
-                    </li>
-
-                    <li>
-                        Verified Buyer Reviews
-                    </li>
-
-                    <li>
-                        Express Shipping
-                    </li>
-
+                    <li>15-Day Free Returns</li>
+                    <li>Verified Buyer Reviews</li>
+                    <li>Express Shipping</li>
                 </ul>
-
             </div>
-
-
-            <!-- Contact -->
             <div class="footer-col">
-
-                <h4>
-                    Contact Us
-                </h4>
-
+                <h4>Contact Us</h4>
                 <ul>
-
-                    <li>
-                        support@saicollection.com
-                    </li>
-
-                    <li>
-                        Mon - Sat: 9:00 AM - 7:00 PM
-                    </li>
-
+                    <li>support@saicollection.com</li>
+                    <li>Mon - Sat: 9:00 AM - 7:00 PM</li>
                 </ul>
-
             </div>
-
         </div>
-
-
         <div class="footer-bottom">
-
-            &copy; 2026 Sai Collection.
-            All rights reserved.
-
+            &copy; 2026 Sai Collection. All rights reserved.
         </div>
-
     </footer>
 
-
-    <!-- JavaScript -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-
 </body>
 </html>
